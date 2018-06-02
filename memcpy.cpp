@@ -4,12 +4,12 @@ void* memcpy_1 (void* dest, const void* src, std::size_t count) {
 	char* a_dest = (char *) dest;
 	char* a_src = (char *) src;
 	for (int i = 0; i < count; i++) {
-		__asm__(
+		__asm__ volatile (
 			"movb %[src], %%al\n\t"
 			"movb %%al, %[dest]\n\t"
 			:[dest]"=m"(*a_dest)
 			:[src]"m"(*a_src)
-			:"al"
+			:"al", "memory"
 			);
 		a_dest++;
 		a_src++;
@@ -22,12 +22,12 @@ void* memcpy_8 (void* dest, const void* src, std::size_t count) {
 	char* a_src = (char *) src;
 	int left = count;
 	for (int i = 0; i < (int)count - 8; i += 8) {
-		__asm__(
+		__asm__ volatile (
 			"movq %[src], %%rax\n\t"
 			"movq %%rax, %[dest]\n\t"
 			:[dest]"=m"(*a_dest)
 			:[src]"m"(*a_src)
-			:"rax"
+			:"rax", "memory"
 			);
 		a_dest+=8;
 		a_src+=8;
@@ -56,12 +56,12 @@ void* memcpy_16 (void* dest, const void* src, std::size_t count, bool aligned) {
 	}
 	int left = count;
 	for (int i = 0; i < (int)count - 16; i += 16) {
-		__asm__(
+		__asm__ volatile (
 			"movdqu %[src], %%xmm0\n\t"
 			"movdqu %%xmm0, %[dest]\n\t"
 			:[dest]"=m"(*a_dest)
 			:[src]"m"(*a_src)
-			:"xmm0"
+			:"xmm0", "memory"
 			);
 		a_dest+=16;
 		a_src+=16;
@@ -82,7 +82,7 @@ int main() {
 	kek[1] = 257;
 	kek[2] = 514;
 	long long qeq[3];
-	qeq[2] = 515;
+	qeq[2] = 780;
 	int c = 257, d = 0;
 	memcpy_1(&d, &c, 1);
 	std::cout << d << std::endl;
