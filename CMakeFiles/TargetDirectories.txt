@@ -1,0 +1,4 @@
+/home/jabba/Desktop/asm/CMakeFiles/edit_cache.dir
+/home/jabba/Desktop/asm/CMakeFiles/rebuild_cache.dir
+/home/jabba/Desktop/asm/CMakeFiles/add.dir
+/home/jabba/Desktop/asm/CMakeFiles/hello.dir
